@@ -23,6 +23,11 @@ public class BookController {
         return "books/list";
     }
 
+    @GetMapping("/index")
+    public String index(Model model) {
+        return "index";
+    }
+
     @GetMapping("/books/{isbn}")
     public Mono<Book> findByIsbn(@PathVariable("isbn") String isbn) {
         return bookService.find(isbn);
