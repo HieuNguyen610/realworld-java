@@ -14,8 +14,8 @@ public class OrderServiceApplication {
 		SpringApplication.run(OrderServiceApplication.class, args);
 	}
 
-	@Bean
-	public FixedLocaleContextResolver localeContextResolver () {
-		return new FixedLocaleContextResolver(new Locale("nl", "NL"));
-	}
+//	@Bean
+//	public FixedLocaleContextResolver localeContextResolver () {
+//		return new FixedLocaleContextResolver(new Locale("nl", "NL"));
+//	}
 }
