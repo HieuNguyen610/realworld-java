@@ -13,14 +13,13 @@ import org.springframework.stereotype.Service;
 public class OrderService {
 
     private final OrderRepository orderRepository;
-    private final KafkaTemplate<String, OrderEvent> kafkaTemplate;
 
     public ResponseEntity<String> createOrder(Order order) {
 
         order.setStatus("PENDING");
         this.orderRepository.save(order);
         //TODO: send kafka message
-        kafkaTemplate.send("order-topic", new OrderEvent(order.getId(), "PENDING", "ORDER"));
+//        kafkaTemplate.send("order-topic", new OrderEvent(order.getId(), "PENDING", "ORDER"));
         return ResponseEntity.ok("Order created successfully");
     }
 }
