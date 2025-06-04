@@ -8,29 +8,25 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.http.client.reactive.ReactorClientHttpConnector;
+import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.i18n.FixedLocaleContextResolver;
+import reactor.netty.http.client.HttpClient;
 
 import java.util.Collection;
 import java.util.Locale;
 
 @SpringBootApplication
-@PropertySource("classpath:your-external.properties")
 public class OrderServiceApplication {
 
 	public static void main(String[] args) {
-		var ctx = SpringApplication.run(OrderServiceApplication.class, args);
+		SpringApplication.run(OrderServiceApplication.class, args);
 	}
 
 	@Bean
-	public ApplicationRunner calculationRunner(Calculator calculator,
-											   @Value("${lhs}") int lhs,
-											   @Value("${rhs}") int rhs,
-											   @Value("${op}") char op) {
-		return args -> calculator.calculate(lhs, rhs, op);
-	}
-
-	@Bean
-	public Calculator calculator(Collection<Operation> operations) {
-		return new Calculator(operations);
+	public WebClient restClient(WebClient.Builder builder) {
+		var httpClient = HttpClient.create().followRedirect(true);
+		var connector = new ReactorClientHttpConnector(httpClient);
+		return builder.clientConnector(connector).build();
 	}
 }
