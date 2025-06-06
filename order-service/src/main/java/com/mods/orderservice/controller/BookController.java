@@ -28,7 +28,7 @@ public class BookController {
         return "index";
     }
 
-    @GetMapping("/books/{isbn}")
+    @GetMapping("/bookss/{isbn}")
     public Mono<Book> findByIsbn(@PathVariable("isbn") String isbn) {
         return bookService.find(isbn);
     }
